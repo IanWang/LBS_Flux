@@ -1,28 +1,29 @@
-var request = require('request');
 var api = 'https://commandp-lbs-backend.herokuapp.com/api/v1/';
 
 var auth = {
 
-	login: function(form) {
-		request.put({
+	login: function(form, cb) {
+		$.put({
 			url: api + 'login',
-			formData: form
-		}, function(err, res, body) {
-			if (err) {
-    		return console.error('Login failed:', err);
-  		}
-  		console.log('Login!  Server responded with:', body);
+			data: form,
+			success: function(data) {
+				cb(null, data);
+			},
+			error: function(xhr, status, err) {
+				cb(err.toString(), null);
+			}
 		});
 	},
-	signup: function(form) {
-		request.post({
+	signup: function(form, cb) {
+		$.post({
 			url: api + 'register',
-			formData: form
-		}, function(err, res, body) {
-			if (err) {
-    		return console.error('Signup failed:', err);
-  		}
-  		console.log('Signup!  Server responded with:', body);
+			data: form,
+			success: function(data) {
+				cb(null, data);
+			},
+			error: function(xhr, status, err) {
+				cb(err.toString(), null);
+			}
 		});
 	},
 
@@ -31,3 +32,5 @@ var auth = {
 	}
 
 };
+
+module.exports = auth;

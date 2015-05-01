@@ -2,6 +2,8 @@ var React = require('react');
 var Router = require('react-router');
 var RouteHandler = Router.RouteHandler;
 var Link = Router.Link;
+
+var auth = require('../services/auth');
 /*
 var RedirectIfLoggedin = require('../mixins/RedirectIfLoggedin');
 */
@@ -22,7 +24,11 @@ var Signup = React.createClass({
 				password: this.refs.pass.getDOMNode().value
 			}
 		};
-		console.log(form);
+
+		auth.signup(form, function(res) {
+			console.log(res);
+		});
+
 	},
 
 	render: function () {
