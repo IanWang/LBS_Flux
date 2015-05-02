@@ -3,55 +3,72 @@ var Router = require('react-router');
 var RouteHandler = Router.RouteHandler;
 var Link = Router.Link;
 
-var auth = require('../services/auth');
-/*
-var RedirectIfLoggedin = require('../mixins/RedirectIfLoggedin');
-*/
-var Signup = React.createClass({
+var auth = require('../stores/auth');
+var RedirectWhenLoggedIn = require('../mixins/redirect_when_logged_in');
 
-	getInitialState: function () {
+var Login = React.createClass({
+
+  mixins: [Router.Navigation, RedirectWhenLoggedIn],
+
+  statics: {
+    attemptedTransition: null
+  },
+
+  getInitialState: function () {
     return {
       error: false
     };
   },
 
-	handleSubmit: function(evt) {
-		evt.preventDefault();
-		var form = {
-			user: {
-				username: this.refs.name.getDOMNode().value,
-				email: this.refs.email.getDOMNode().value,
-				password: this.refs.pass.getDOMNode().value
-			}
-		};
-
-		auth.signup(form, function(err, res) {
-			if(err) console.log(err);
-		});
-
-	},
-
-	render: function () {
+  handleSubmit: function(evt) {
     
-    var error = this.state.error ? <p>Bad login information</p> : '';
+    evt.preventDefault();
+    
+    var that = this;
+    var form = {
+      user: {
+        username: this.refs.name.getDOMNode().value,
+        email: this.refs.email.getDOMNode().value,
+        password: this.refs.pass.getDOMNode().value
+      }
+    };
+
+    auth.signup(form, function(err, res) {
+      
+      if(err) return that.setState({ error: true });
+      
+      if(Login.attemptedTransition) {
+        var transition = Login.attemptedTransition;
+        Login.attemptedTransition = null;
+        transition.retry();
+      } else {
+        that.replaceWith('/dashboard'); 
+      }
+
+    });
+
+  },
+
+  render: function () {
+    var errors = this.state.error ? <p>Bad login information</p> : '';
 
     return (
       <form onSubmit={this.handleSubmit}>
-      	<label>
-          <input ref="name" placeholder="username" defaultValue="locus"/>
+        <label>
+          <input ref="name" placeholder="username" defaultValue=""/>
         </label>
         <label>
           <input ref="pass" placeholder="password"/>
         </label>
         <label>
-          <input ref="email" placeholder="email" defaultValue="Locus@example.com"/>
+          <input ref="email" placeholder="email" defaultValue="@example.com"/>
         </label>
         <br/>
         <button type="submit">Signup</button>
-        {error}
+        {errors}
       </form>
     );
   }
 });
 
-module.exports = Signup;
+module.exports = Login;

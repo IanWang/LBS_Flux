@@ -1,12 +1,12 @@
-var auth = require('../services/auth');
-var Login = require('../components/Login');
+var auth = require('../stores/auth'),
+    Login = require('../components/login');
 
 var Authentication = {
   statics: {
-    willTransitionTo: function (next) {
+    willTransitionTo: function (transition) {
       if (!auth.loggedIn()) {
-        Login.attemptedTransition = next;
-        next.redirect('/login');
+        Login.attemptedTransition = transition;
+        transition.redirect('/login');
       }
     }
   }
