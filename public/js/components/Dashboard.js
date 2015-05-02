@@ -5,7 +5,7 @@ var Dashboard = React.createClass({
 		return (
 			<div>
 				Dashboard
-       </div>
+      </div>
      );
 	}
 });

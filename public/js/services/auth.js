@@ -3,8 +3,9 @@ var api = 'https://commandp-lbs-backend.herokuapp.com/api/v1/';
 var auth = {
 
 	login: function(form, cb) {
-		$.put({
-			url: api + 'login',
+		$.ajax({
+			method: 'put',
+			url: '/login',
 			data: form,
 			success: function(data) {
 				cb(null, data);
@@ -15,8 +16,9 @@ var auth = {
 		});
 	},
 	signup: function(form, cb) {
-		$.post({
-			url: api + 'register',
+		$.ajax({
+			method: 'post',
+			url: '/register',
 			data: form,
 			success: function(data) {
 				cb(null, data);

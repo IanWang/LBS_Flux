@@ -25,8 +25,8 @@ var Signup = React.createClass({
 			}
 		};
 
-		auth.signup(form, function(res) {
-			console.log(res);
+		auth.signup(form, function(err, res) {
+			if(err) console.log(err);
 		});
 
 	},
