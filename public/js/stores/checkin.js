@@ -5,6 +5,8 @@ var assign = require('object-assign');
 
 var CHANGE_EVENT = 'change';
 
+// will be passed back to root react app.
+var _myLocation = {};
 var _checkIns = {};
 
 
@@ -12,6 +14,10 @@ var AppStore = assign({}, EventEmitter.prototype, {
 
   getAll: function() {
     return _checkIns;
+  },
+
+  getLocation: function() {
+    return _myLocation;
   },
 
   emitChange: function() {
@@ -36,7 +42,6 @@ function getLocation(token, cb) {
 			lng: pos.coords.longitude,
       radius: 100
 		};
-    console.log('a', res);
     cb(res);
 	});
 }
@@ -48,7 +53,7 @@ function getNearPlace(position) {
     url: '/near',
     data: position,
     success: function(data) {
-      console.log('res data! ', data);
+      console.log('my position ', data);
     }
   });
 
@@ -60,10 +65,16 @@ AppDispatcher.register(function(action) {
   var token = action.token;
 
   switch(action.actionType) {
-    case AppConstants.APP_CREATE_CHECKIN:
+    case AppConstants.APP_GET_LOCATION:
       getLocation(token, function(res) {
-        getNearPlace(res);
+        _myLocation = res;
+        console.log('b ', res);
+        AppStore.emitChange();
       });
+      break;
+
+    case AppConstants.APP_CREATE_CHECKIN:
+      
       AppStore.emitChange();
       break;
 
@@ -72,7 +83,7 @@ AppDispatcher.register(function(action) {
       AppStore.emitChange();
       break;
 
-    default:
+    default: // do nothing
     
   }
 });

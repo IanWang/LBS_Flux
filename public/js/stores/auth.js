@@ -1,4 +1,3 @@
-var api = 'https://commandp-lbs-backend.herokuapp.com/api/v1/';
 
 var auth = {
 
@@ -18,7 +17,10 @@ var auth = {
           cb(null, data);
         }
 
-      }.bind(this)
+      }.bind(this),
+      error: function(err) {
+        cb(err, null);
+      }
     });
 
   },
@@ -47,7 +49,7 @@ var auth = {
   logout: function (cb) {
     localStorage.removeItem('token');
     if(cb) cb();
-    this.onChange(false);
+    this._onChange(false);
   },
   loggedIn: function () {
     return !!localStorage.getItem('token');

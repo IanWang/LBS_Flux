@@ -11,16 +11,25 @@ var AppStore = require('../stores/checkin');
  * Retrieve the current  data from the TodoStore
  */
 function getAppState() {
-  return {
-    allPlaces: AppStore.getAll()
-  };
+  console.log('reset state...');
+  if(auth.loggedIn()) {
+    console.log('is Auth!');
+    return {
+      allPlaces: AppStore.getAll(),
+      myLocation: AppStore.getLocation(),
+      loggedIn: auth.loggedIn()
+    };
+  }
+
+  return { loggedIn: false }
+
 }
 
 var App = React.createClass({
 
   getInitialState: function () {
-    return {
-      loggedIn: auth.loggedIn()
+    return { 
+      loggedIn: false  
     };
   },
 
@@ -50,13 +59,15 @@ var App = React.createClass({
       <Link to="login">Log in</Link>;
 
     return (
-      <div>
-        <ul>
+      <div className="pure-g">
+        <ul className="nav pure-u-1">
           <li>{loginOrOut}</li>
           <li><Link to="signup">Sign up</Link></li>
           <li><Link to="dashboard">Dashboard</Link></li>
         </ul>
-        <RouteHandler/>
+        <RouteHandler
+          myLocation={this.state.myLocation}
+        />
       </div>
     );
   }

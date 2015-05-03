@@ -4,8 +4,15 @@ var AppConstants = require('../constants/AppConstants');
 
 var AppActions = {
 
-  createCheckIn: function(token) {
+  getLocation: function(token) {
     console.log('2');
+    AppDispatcher.dispatch({
+      actionType: AppConstants.APP_GET_LOCATION,
+      token: token
+    });
+  },
+
+  createCheckIn: function(token) {
     AppDispatcher.dispatch({
       actionType: AppConstants.APP_CREATE_CHECKIN,
       token: token
