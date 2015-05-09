@@ -9,8 +9,7 @@ var auth = {
       data: form,
       success: function(data) {
         
-        console.log('res data! ', data);
-        
+        if(data.errors) cb('failed', null);
         if(data.authenticated && data.token) {
           localStorage.setItem('token', data.token);
           this._onChange(true);

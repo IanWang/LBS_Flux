@@ -51,11 +51,17 @@ router.put('/login', function(req, res) {
 			res.send(...);
 		})
 		*/		
-		res.send({
-			authenticated: true,
-			username: data.user.username,
-			token: data.access_token	
-		});
+		if(data.user && data.access_token) {
+			res.send({
+				authenticated: true,
+				username: data.user.username,
+				token: data.access_token	
+			});
+		} else {
+			res.send({
+				errors: data.errors
+			});
+		}
 	});
 });
 

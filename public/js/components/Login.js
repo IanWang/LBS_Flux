@@ -49,18 +49,19 @@ var Login = React.createClass({
     var errors = this.state.error ? <p>Bad login information</p> : '';
     return (
 
-      <form className="pure-form pure-u-1-2" onSubmit={this.handleSubmit}>
-        <fieldset className="pure-group">          
-          <input className="pure-u-1" ref="name" placeholder="username" autoFocus="true" defaultValue="nono"/>
-      
-          <input className="pure-u-1" ref="pass" placeholder="password"/>
-      
-        </fieldset>
+      <form onSubmit={this.handleSubmit}>
 
-        {errors}
-
-        <button type="submit" className="pure-button button-secondary pure-u-1">Log In</button>
+        <div className="row">
+          <input className="u-full-width" type="text" ref="name" placeholder="username" autoFocus="true" defaultValue="nono"/>
         
+          <input className="u-full-width" type="password" ref="pass" placeholder="password"/>
+        </div>
+
+
+        <button type="submit">Log In</button>
+        <span className="authLink"><Link to="signup">Sign Up</Link></span>
+        
+        {errors}
       </form>
     );
   }

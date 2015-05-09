@@ -17,10 +17,11 @@ var AppActions = {
     });
   },
 
-  createCheckIn: function(token) {
+  createCheckIn: function(placeId, comment) {
     AppDispatcher.dispatch({
       actionType: AppConstants.APP_CREATE_CHECKIN,
-      token: token
+      placeId: placeId,
+      comment: comment
     });
   },
 

@@ -5,6 +5,9 @@ var Map = ReactGoogleMaps.Map;
 var Marker = ReactGoogleMaps.Marker;
 var LatLng = GoogleMapsAPI.LatLng;
 
+var MapWindow = require('./mapWindow');
+
+
 var GoogleMapMarkers = React.createClass({
 
   getInitialState: function() {
@@ -28,12 +31,19 @@ var GoogleMapMarkers = React.createClass({
     });
   },
 
-  renderMarkers: function(state, i) {
+  renderMarkers: function(state, index) {
+    var that = this;
     return (
       <Marker 
       	position={state.position} 
-      	key={i} />
+      	key={index} 
+        onClick={that.handleMarkerClick.bind(that, index)}/>
     );
+  },
+
+  handleMarkerClick: function(index, evt) {
+
+
   },
 
   handleMapClick: function(mapEvent) {

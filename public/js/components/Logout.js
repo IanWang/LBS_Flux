@@ -5,7 +5,7 @@ var Logout = React.createClass({
 
   statics: {
     willTransitionTo: function (transition) {
-      if ( !auth.loggedIn()) {
+      if (!auth.loggedIn()) {
         transition.redirect('/');
       }
     }

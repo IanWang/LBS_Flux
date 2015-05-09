@@ -7,6 +7,7 @@ var CHANGE_EVENT = 'change';
 
 // will be passed back to root react app.
 var _myLocation = {};
+var _myPlace = {};
 var _checkIns = {};
 
 var TOKEN = auth.getToken();
@@ -19,6 +20,10 @@ var AppStore = assign({}, EventEmitter.prototype, {
 
   getLocation: function() {
     return _myLocation;
+  },
+
+  getPlace: function() {
+    return _myPlace;
   },
 
   emitChange: function() {
@@ -80,6 +85,28 @@ function createPlace(place, cb) {
 
 }
 
+function createCheckIn(placeId, comment, cb) {
+
+  var form = {
+    placeId: placeId,
+    comment: comment,
+    token: TOKEN
+  };
+
+  $.ajax({
+    method: 'post',
+    url: '/checkin',
+    data: form,
+    success: function(data) {
+      console.log('create checkIn response: ', data);
+      cb(data);
+    },
+    error: function(err) {
+      alert('Operation Failed!');
+    }
+  });
+}
+
 // Register callback to handle all updates
 AppDispatcher.register(function(action) {
 
@@ -93,14 +120,18 @@ AppDispatcher.register(function(action) {
 
     case AppConstants.APP_CREATE_PLACE:
       createPlace(action.place, function(res) {
-        console.log('res from dispatcher: ', res);
+        _myPlace = {
+          name: res.place.name,
+          id: res.place.id
+        };
         AppStore.emitChange();  
       });
       break;
 
-    case AppConstants.APP_SHOW_CHECKIN_FEED:
-      
-      AppStore.emitChange();
+    case AppConstants.APP_CREATE_CHECKIN:
+      createCheckIn(action.placeId, action.comment, function(res) {
+        AppStore.emitChange();
+      });
       break;
 
     default: // do nothing

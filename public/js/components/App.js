@@ -12,10 +12,10 @@ var AppStore = require('../stores/AppStore');
 function getAppState() {
   console.log('reset state...');
   if(auth.loggedIn()) {
-    console.log('is Auth!');
     return {
       allPlaces: AppStore.getAll(),
       myLocation: AppStore.getLocation(),
+      myPlace: AppStore.getPlace(),
       loggedIn: auth.loggedIn()
     };
   }
@@ -53,20 +53,12 @@ var App = React.createClass({
 
 
   render: function () {
-    var loginOrOut = this.state.loggedIn ?
-      <Link to="logout">Log out</Link> :
-      <Link to="login">Log in</Link>;
 
     return (
-      <div className="pure-g">
-        <ul className="nav pure-u-1">
-          <li>{loginOrOut}</li>
-          <li><Link to="signup">Sign up</Link></li>
-          <li><Link to="dashboard">Dashboard</Link></li>
-        </ul>
+      <div className="">
         <RouteHandler
           myLocation={this.state.myLocation}
-        />
+          myPlace={this.state.myPlace}/>
       </div>
     );
   }

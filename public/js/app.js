@@ -6,7 +6,6 @@ var DefaultRoute = Router.DefaultRoute;
 var Route = Router.Route;
 
 var App = require('./components/app'),
-    Home = require('./components/home'),
     Signup = require('./components/signup'),
     Login = require('./components/login'),
     Logout = require('./components/logout'),
@@ -18,7 +17,7 @@ var routes = (
     <Route name="login" handler={Login}/>
     <Route name="logout" handler={Logout}/>
     <Route name="dashboard" handler={Dashboard}/>
-    <DefaultRoute handler={Home}/>
+    <DefaultRoute handler={Login}/>
   </Route>
 );
 
