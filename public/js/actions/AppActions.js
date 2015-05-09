@@ -17,6 +17,13 @@ var AppActions = {
     });
   },
 
+  getNearPlace: function(position) {
+    AppDispatcher.dispatch({
+      actionType: AppConstants.APP_GET_NEAR_PLACES,
+      position: position
+    });
+  },
+
   createCheckIn: function(placeId, comment) {
     AppDispatcher.dispatch({
       actionType: AppConstants.APP_CREATE_CHECKIN,

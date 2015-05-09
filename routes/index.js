@@ -79,7 +79,7 @@ router.post('/near', function(req, res) {
 		qs: form
 	}, function(err, httpRes, body) {
 		console.log(body);
-		res.send(body);
+		res.send(JSON.parse(body));
 	})
 	
 });

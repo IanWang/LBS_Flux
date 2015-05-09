@@ -20,6 +20,10 @@ footer a {
 	color: #838383;
 	text-decoration: none;
 }
+
+button {
+  margin-right: 5px;
+}
 .dashboard {
 	margin: 1em auto;
 }

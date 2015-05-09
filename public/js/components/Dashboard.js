@@ -17,14 +17,12 @@ var Dashboard = React.createClass({
   getInitialState: function() {
     return {
       token: auth.getToken(),
+      nearPlaces: {},
       myPlace: {
         name: '',
         id: ''
       },
-      myLocation: {
-        lat: '',
-        lng: ''
-      }
+      myLocation: {}
     };
   },
 
@@ -36,7 +34,8 @@ var Dashboard = React.createClass({
     console.log('new props ', props);
     this.setState({
       myLocation: props.myLocation,
-      myPlace: props.myPlace
+      myPlace: props.myPlace,
+      nearPlaces: props.nearPlaces
     })
   },
 
@@ -64,16 +63,16 @@ var Dashboard = React.createClass({
         <h1>Dashboard</h1>
         <p>You made it!</p>
         <p>Token: {this.state.token}</p>
+
         <button onClick={this._createPlace}>Creat Place</button>
         <button onClick={this._createCheckIn}>Check In</button>
         
         <p>Current Place: {this.state.myPlace.name}</p>
         <p>Current PlaceId: {this.state.myPlace.id}</p>
 
-        
         <Map 
-          lat={this.state.myLocation.lat}
-          lng={this.state.myLocation.lng}/>
+          myLocation={this.state.myLocation}
+          places={this.state.nearPlaces} />
 
         <p className="authLink"><Link to="logout">Log out</Link></p>
 

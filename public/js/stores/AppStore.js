@@ -8,6 +8,7 @@ var CHANGE_EVENT = 'change';
 // will be passed back to root react app.
 var _myLocation = {};
 var _myPlace = {};
+var _nearPlaces = {};
 var _checkIns = {};
 
 var TOKEN = auth.getToken();
@@ -24,6 +25,10 @@ var AppStore = assign({}, EventEmitter.prototype, {
 
   getPlace: function() {
     return _myPlace;
+  },
+
+  getNearPlace: function() {
+    return _nearPlaces;
   },
 
   emitChange: function() {
@@ -51,13 +56,14 @@ function getLocation(cb) {
 	});
 }
 
-function getNearPlace(position) {
+function getNearPlace(position, cb) {
 	$.ajax({
     method: 'post',
     url: '/near',
     data: position,
     success: function(data) {
-      console.log('my position ', data);
+      console.log('near places ', data);
+      cb(data);
     },
     error: function(err) {
       alert('Operation Failed');
@@ -112,10 +118,17 @@ AppDispatcher.register(function(action) {
 
   switch(action.actionType) {
     case AppConstants.APP_GET_LOCATION:
-      getLocation(function(res) {
-        _myLocation = res;
-        AppStore.emitChange();
+      
+      getLocation(function(location) {
+        _myLocation = location;
+
+        getNearPlace(_myLocation, function(res) {
+          _nearPlaces = res.places;
+          AppStore.emitChange();  
+        });
+
       });
+
       break;
 
     case AppConstants.APP_CREATE_PLACE:
@@ -127,6 +140,7 @@ AppDispatcher.register(function(action) {
         AppStore.emitChange();  
       });
       break;
+
 
     case AppConstants.APP_CREATE_CHECKIN:
       createCheckIn(action.placeId, action.comment, function(res) {

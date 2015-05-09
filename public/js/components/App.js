@@ -16,6 +16,7 @@ function getAppState() {
       allPlaces: AppStore.getAll(),
       myLocation: AppStore.getLocation(),
       myPlace: AppStore.getPlace(),
+      nearPlaces: AppStore.getNearPlace(),
       loggedIn: auth.loggedIn()
     };
   }
@@ -58,7 +59,8 @@ var App = React.createClass({
       <div className="">
         <RouteHandler
           myLocation={this.state.myLocation}
-          myPlace={this.state.myPlace}/>
+          myPlace={this.state.myPlace}
+          nearPlaces={this.state.nearPlaces}/>
       </div>
     );
   }

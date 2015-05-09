@@ -4,6 +4,8 @@ var GoogleMapsAPI = window.google.maps;
 var Map = ReactGoogleMaps.Map;
 var Marker = ReactGoogleMaps.Marker;
 var LatLng = GoogleMapsAPI.LatLng;
+var assign = require('object-assign');
+
 
 var MapWindow = require('./mapWindow');
 
@@ -14,20 +16,30 @@ var GoogleMapMarkers = React.createClass({
     return {
       center: new LatLng(25.047908, 121.517315), // taipei main station
       zoom: 12,
-      markers: [
-        {position: new LatLng(25.047908, 121.517315)}
-      ]
+      markers: []
     };
   },
 
   componentWillReceiveProps: function(props) {
+
+    if(props.places) {
+      
+      var markers = props.places.map(function(ele, index) {
+        return {
+          position: new LatLng(ele.lat, ele.lng),
+          name: ele.name,
+          id: ele.id
+        };
+      });
+
+      this.setState({
+        markers: markers
+      });
+    }
+
   	this.setState({
-      center: new LatLng(props.lat, props.lng),
-      zoom: 12,
-      markers: [
-      	{position: new LatLng(25.047908, 121.517315)},
-        {position: new LatLng(props.lat, props.lng)}
-      ]
+      center: new LatLng(props.myLocation.lat, props.myLocation.lng),
+      zoom: 12
     });
   },
 
