@@ -47,13 +47,34 @@ function getLocation(cb) {
 }
 
 function getNearPlace(position) {
-
 	$.ajax({
     method: 'post',
     url: '/near',
     data: position,
     success: function(data) {
       console.log('my position ', data);
+    },
+    error: function(err) {
+      alert('Operation Failed');
+    }
+  });
+}
+
+
+function createPlace(place, cb) {
+  
+  var form = assign(place, {token: TOKEN});
+  
+  $.ajax({
+    method: 'post',
+    url: '/place',
+    data: form,
+    success: function(data) {
+      console.log('create place response: ', data);
+      cb(data);
+    },
+    error: function(err) {
+      alert('Operation Failed!');
     }
   });
 
@@ -66,14 +87,15 @@ AppDispatcher.register(function(action) {
     case AppConstants.APP_GET_LOCATION:
       getLocation(function(res) {
         _myLocation = res;
-        console.log('b ', res);
         AppStore.emitChange();
       });
       break;
 
-    case AppConstants.APP_CREATE_CHECKIN:
-      
-      AppStore.emitChange();
+    case AppConstants.APP_CREATE_PLACE:
+      createPlace(action.place, function(res) {
+        console.log('res from dispatcher: ', res);
+        AppStore.emitChange();  
+      });
       break;
 
     case AppConstants.APP_SHOW_CHECKIN_FEED:

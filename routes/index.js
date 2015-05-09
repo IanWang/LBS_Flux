@@ -68,8 +68,6 @@ router.post('/near', function(req, res) {
 		token: req.body.token
 	};
 	
-	console.log(form);
-
 	request.get({
 		url: api + '/places/near',
 		qs: form
@@ -78,6 +76,29 @@ router.post('/near', function(req, res) {
 		res.send(body);
 	})
 	
+});
+
+router.post('/place', function(req, res) {
+
+	var form = {
+		token: req.body.token,
+		place: {
+			name: req.body.name,
+			lat: req.body.lat,
+			lng: req.body.lng
+		}
+	};
+	
+	console.log('receiced form:', form);
+
+	request.post(api + '/places', {
+		json: form
+	}, function(err, httpRes) {
+		// error code 500 with no error message...?
+		res.send(httpRes.body);
+	});
+	
+
 });
 
 // not working right now!

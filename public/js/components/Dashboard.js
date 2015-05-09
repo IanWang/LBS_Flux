@@ -2,7 +2,7 @@ var React = require('react');
 var Authentication = require('../mixins/authentication');
 var auth = require('../stores/auth');
 var AppActions = require('../actions/AppActions');
-
+var assign = require('object-assign');
 var Map = require('./map');
 
 
@@ -39,6 +39,12 @@ var Dashboard = React.createClass({
     AppActions.getLocation(this.state.token);
   },
 
+  _createPlace: function() {
+    var name = window.prompt('Name this place: ');
+    var place = assign(this.state.myLocation, {name: name});
+    AppActions.createPlace(place);
+  },
+
   render: function () {
     
     return (
@@ -46,7 +52,7 @@ var Dashboard = React.createClass({
         <h1>Dashboard</h1>
         <p>You made it!</p>
         <p>Token: {this.state.token}</p>
-        <button>Get</button>
+        <button onClick={this._createPlace}>Add current Place</button>
         <Map 
           lat={this.state.myLocation.lat}
           lng={this.state.myLocation.lng}
