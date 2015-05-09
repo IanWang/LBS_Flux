@@ -15,7 +15,7 @@ var GoogleMapMarkers = React.createClass({
   getInitialState: function() {
     return {
       center: new LatLng(25.047908, 121.517315), // taipei main station
-      zoom: 12,
+      zoom: 15,
       markers: []
     };
   },
@@ -38,8 +38,7 @@ var GoogleMapMarkers = React.createClass({
     }
 
   	this.setState({
-      center: new LatLng(props.myLocation.lat, props.myLocation.lng),
-      zoom: 12
+      center: new LatLng(props.myLocation.lat, props.myLocation.lng)
     });
   },
 
@@ -58,6 +57,7 @@ var GoogleMapMarkers = React.createClass({
 
   },
 
+  // not using yet!
   handleMapClick: function(mapEvent) {
     var marker = {
       position: mapEvent.latLng
