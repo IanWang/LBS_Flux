@@ -1,4 +1,4 @@
-var React = require('react');
+var React = require('react/addons');
 var ReactGoogleMaps = require('react-googlemaps');
 var GoogleMapsAPI = window.google.maps;
 var Map = ReactGoogleMaps.Map;
@@ -9,10 +9,10 @@ var GoogleMapMarkers = React.createClass({
 
   getInitialState: function() {
     return {
-      center: new LatLng(this.props.lat, this.props.lng),
-      zoom: 13,
+      center: new LatLng(25.047908, 121.517315), // taipei main station
+      zoom: 12,
       markers: [
-        {position: new LatLng(this.props.lat, this.props.lng)}
+        {position: new LatLng(25.047908, 121.517315)}
       ]
     };
   },
@@ -20,8 +20,9 @@ var GoogleMapMarkers = React.createClass({
   componentWillReceiveProps: function(props) {
   	this.setState({
       center: new LatLng(props.lat, props.lng),
-      zoom: 13,
+      zoom: 12,
       markers: [
+      	{position: new LatLng(25.047908, 121.517315)},
         {position: new LatLng(props.lat, props.lng)}
       ]
     });
@@ -29,7 +30,9 @@ var GoogleMapMarkers = React.createClass({
 
   renderMarkers: function(state, i) {
     return (
-      <Marker position={state.position} key={i} />
+      <Marker 
+      	position={state.position} 
+      	key={i} />
     );
   },
 

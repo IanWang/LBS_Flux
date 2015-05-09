@@ -2,13 +2,14 @@ var AppDispatcher = require('../dispatcher/AppDispatcher');
 var AppConstants = require('../constants/AppConstants');
 var EventEmitter = require('events').EventEmitter;
 var assign = require('object-assign');
-
+var auth = require('./auth');
 var CHANGE_EVENT = 'change';
 
 // will be passed back to root react app.
 var _myLocation = {};
 var _checkIns = {};
 
+var TOKEN = auth.getToken();
 
 var AppStore = assign({}, EventEmitter.prototype, {
 
@@ -33,11 +34,10 @@ var AppStore = assign({}, EventEmitter.prototype, {
   }
 });
 
-function getLocation(token, cb) {
+function getLocation(cb) {
 	if(!navigator.geolocation) return;
 	navigator.geolocation.getCurrentPosition(function(pos) {
 		var res = {
-      token: token,
 			lat: pos.coords.latitude,
 			lng: pos.coords.longitude,
       radius: 100
@@ -62,11 +62,9 @@ function getNearPlace(position) {
 // Register callback to handle all updates
 AppDispatcher.register(function(action) {
 
-  var token = action.token;
-
   switch(action.actionType) {
     case AppConstants.APP_GET_LOCATION:
-      getLocation(token, function(res) {
+      getLocation(function(res) {
         _myLocation = res;
         console.log('b ', res);
         AppStore.emitChange();

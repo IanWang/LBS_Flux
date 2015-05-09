@@ -4,8 +4,7 @@ var RouteHandler = Router.RouteHandler;
 var Link = Router.Link;
 
 var auth = require('../stores/auth');
-var AppStore = require('../stores/checkin');
-
+var AppStore = require('../stores/AppStore');
 
 /**
  * Retrieve the current  data from the TodoStore

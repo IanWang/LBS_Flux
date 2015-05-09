@@ -17,18 +17,22 @@
   "devDependencies": {
     "browserify": "^6.2.0",
     "envify": "^3.0.0",
-    "jest-cli": "~0.1.17",
+    "jest-cli": "^0.4.2",
     "reactify": "^0.17.1",
     "uglify-js": "~2.4.15",
     "watchify": "^2.1.1"
   },
   "scripts": {
-    "start": "watchify -o js/bundle.js -v -d js/app.js"
+    "start": "watchify -o js/bundle.js -v -d js/app.js",
+    "test": "jest"
   },
   "author": "Ian Wang (http://ianwang.co/about)",
   "browserify": {
     "transform": [
       "reactify"
     ]
+  },
+  "jest": { 
+    "rootDir": "./js"
   }
 }

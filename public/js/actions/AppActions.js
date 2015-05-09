@@ -4,11 +4,16 @@ var AppConstants = require('../constants/AppConstants');
 
 var AppActions = {
 
-  getLocation: function(token) {
-    console.log('2');
+  getLocation: function() {
     AppDispatcher.dispatch({
-      actionType: AppConstants.APP_GET_LOCATION,
-      token: token
+      actionType: AppConstants.APP_GET_LOCATION
+    });
+  },
+
+  createPlace: function(place) {
+    AppDispatcher.dispatch({
+      actionType: AppConstants.APP_CREATE_PLACE,
+      place: place
     });
   },
 
