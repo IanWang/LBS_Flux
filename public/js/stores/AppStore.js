@@ -4,6 +4,7 @@ var EventEmitter = require('events').EventEmitter;
 var assign = require('object-assign');
 var auth = require('./auth');
 var CHANGE_EVENT = 'change';
+var $ = require('jquery');
 
 // will be passed back to root react app.
 var _myLocation = {};
@@ -70,7 +71,7 @@ function getNearPlace(position, cb) {
       cb(data);
     },
     error: function(err) {
-      alert('Operation Failed');
+      console.log('Operation Failed');
     }
   });
 }
@@ -87,6 +88,7 @@ function createPlace(place, cb) {
 
   var form = assign(place, {token: TOKEN});
   
+  console.log('form ', form);
   $.ajax({
     method: 'post',
     url: '/place',
@@ -96,7 +98,7 @@ function createPlace(place, cb) {
       cb(data);
     },
     error: function(err) {
-      alert('Operation Failed!');
+      console.log('Operation Failed!');
     }
   });
 
@@ -119,7 +121,7 @@ function createCheckIn(placeId, comment, cb) {
       cb(data);
     },
     error: function(err) {
-      alert('Operation Failed!');
+      console.log('Operation Failed!');
     }
   });
 }
