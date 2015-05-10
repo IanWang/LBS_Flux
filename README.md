@@ -5,18 +5,34 @@
 ## Getting Started
 
 
-Firstly we need to install dependencies in root and public folder.
+In the root folder.
 
-Run the express server:
-
-```
-nodemon ./bin/www
-```
-
-then go to ```/public/js``` directory,
-
-light up SPA by:
+Install dependecies and run the express server:
 
 ```
 npm start
 ```
+
+then open other terminal window, cd to ```/public``` directory,
+
+light up front-end app by:
+
+```
+npm start
+```
+
+Check out the demo app at [localhost:3000](http://localhost:3000)
+
+
+## Feature
+
+- Auth.
+- Get current location and make it as center of the Google map.
+- Click on map to add Place, show it as a mark.
+- Click on mark to check in.
+
+## todos
+
+- Still lack of tests. When I found out that jest may not support ajax test, it was too late.
+- Some missing features, like register user devices, follow others, and checkins feed. 
+- UX problem related to google map APIs. 
