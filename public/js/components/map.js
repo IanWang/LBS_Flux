@@ -65,6 +65,8 @@ var GoogleMapMarkers = React.createClass({
       position: mapEvent.latLng
     };
 
+    // BUG TO BE FIXED:
+    // the updates will be replaced by old markers state.
     this.props.createPlace(marker.position, function(res) {
       
       if(!res) return;

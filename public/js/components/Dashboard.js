@@ -69,11 +69,15 @@ var Dashboard = React.createClass({
     return (
       <div className="container dashboard">
         <h1>Dashboard</h1>
-        <p>You made it!</p>
+        <p>Please open the console to view the process!</p>
 
-        <button onClick={this._createPlace}>Creat Current Place</button>
+        <button onClick={this._createPlace}>Name Current Place</button>
 
-        <small>Click on Marker to Check In</small>
+        <ul>
+          <li>Click on Map to create new Places</li>
+          <li>Click on Marker to Check In</li>
+        </ul>
+        
         <Map 
           myLocation={this.state.myLocation}
           myPlace={this.state.myPlace}
