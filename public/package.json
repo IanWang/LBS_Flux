@@ -24,13 +24,15 @@
     "watchify": "^2.1.1"
   },
   "scripts": {
-    "start": "watchify -o js/bundle.js -v -d js/app.js",
+    "dev": "watchify -o js/bundle.js -v -d js/app.js",
+    "start": "npm i && browserify js/app.js > js/bundle.js && npm test",
     "test": "jest"
   },
   "author": "Ian Wang (http://ianwang.co/about)",
   "browserify": {
     "transform": [
-      "reactify"
+      "reactify",
+      "envify"
     ]
   },
   "jest": {
