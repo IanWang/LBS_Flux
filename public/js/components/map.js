@@ -42,19 +42,20 @@ var GoogleMapMarkers = React.createClass({
     });
   },
 
-  renderMarkers: function(state, index) {
+  renderMarkers: function(ele, index) {
     var that = this;
     return (
       <Marker 
-      	position={state.position} 
+      	position={ele.position} 
       	key={index} 
-        onClick={that.handleMarkerClick.bind(that, index)}/>
+        onClick={that.handleMarkerClick.bind(that, ele.id)}/>
     );
   },
 
-  handleMarkerClick: function(index, evt) {
+  handleMarkerClick: function(placeId, evt) {
 
-
+    this.props.createCheckIn(placeId);
+  
   },
 
   // not using yet!

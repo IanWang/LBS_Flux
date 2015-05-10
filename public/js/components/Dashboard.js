@@ -49,11 +49,12 @@ var Dashboard = React.createClass({
     AppActions.createPlace(place);
   },
 
-  _createCheckIn: function() {
-    /*
-    this._createPlace();
-    AppActions.createCheckIn();
-    */
+  _createCheckIn: function(placeId) {
+    
+    var comment = window.prompt('What do you think about this place?');
+
+    AppActions.createCheckIn(placeId, comment);
+    
   },
 
   render: function () {
@@ -72,7 +73,8 @@ var Dashboard = React.createClass({
 
         <Map 
           myLocation={this.state.myLocation}
-          places={this.state.nearPlaces} />
+          places={this.state.nearPlaces}
+          createCheckIn={this._createCheckIn} />
 
         <p className="authLink"><Link to="logout">Log out</Link></p>
 

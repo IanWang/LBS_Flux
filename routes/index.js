@@ -71,9 +71,11 @@ router.post('/near', function(req, res) {
 	var form = {
 		lat: req.body.lat,
 		lng: req.body.lng,
+		radius: req.body.radius,
 		token: req.body.token
 	};
 	
+	console.log('get near places ', form);
 	request.get({
 		url: api + '/places/near',
 		qs: form
@@ -102,6 +104,29 @@ router.post('/place', function(req, res) {
 	}, function(err, httpRes) {
 		// error code 500 with no error message...?
 		res.send(httpRes.body);
+	});
+	
+
+});
+
+router.post('/checkin', function(req, res) {
+
+	var form = {
+		token: req.body.token,
+		checkin: {
+			place_id: req.body.placeId,
+			comment: req.body.comment
+		}
+	};
+	
+	console.log('receiced form:', form);
+
+	request.post(api + '/checkins', {
+		json: form
+	}, function(err, httpRes, body) {
+		// error code 500 with no error message...?
+		console.log(body);
+		res.send(body);
 	});
 	
 

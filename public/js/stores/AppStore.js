@@ -50,7 +50,8 @@ function getLocation(cb) {
 		var res = {
 			lat: pos.coords.latitude,
 			lng: pos.coords.longitude,
-      radius: 2
+      radius: 5,
+      token: TOKEN
 		};
     cb(res);
 	});
