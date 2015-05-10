@@ -10,10 +10,9 @@ var AppStore = require('../stores/AppStore');
  * Retrieve the current  data from the TodoStore
  */
 function getAppState() {
-  console.log('reset state...');
+  console.log('!!RESET STATE!!');
   if(auth.loggedIn()) {
     return {
-      allPlaces: AppStore.getAll(),
       myLocation: AppStore.getLocation(),
       myPlace: AppStore.getPlace(),
       nearPlaces: AppStore.getNearPlace(),

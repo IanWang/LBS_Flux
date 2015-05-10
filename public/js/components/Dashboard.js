@@ -16,7 +16,6 @@ var Dashboard = React.createClass({
 
   getInitialState: function() {
     return {
-      token: auth.getToken(),
       nearPlaces: {},
       myPlace: {
         name: '',
@@ -40,19 +39,27 @@ var Dashboard = React.createClass({
   },
 
   _getLocation: function() {
-    AppActions.getLocation(this.state.token);
+    AppActions.getLocation();
   },
 
-  _createPlace: function() {
-    var name = window.prompt('Name this place: ');
-    var place = assign(this.state.myLocation, {name: name});
-    AppActions.createPlace(place);
+  _createPlace: function(position, cb) {
+    position = position || this.state.myLocation;
+    var name = window.prompt('Name this place before create: ');
+    var place = assign(position, {name: name});
+
+    if(!name) {
+      cb(false);
+    } else {
+      AppActions.createPlace(place);
+      cb(true);
+    }
   },
 
   _createCheckIn: function(placeId) {
     
     var comment = window.prompt('What do you think about this place?');
 
+    if(!comment) return;
     AppActions.createCheckIn(placeId, comment);
     
   },
@@ -63,17 +70,15 @@ var Dashboard = React.createClass({
       <div className="container dashboard">
         <h1>Dashboard</h1>
         <p>You made it!</p>
-        <p>Token: {this.state.token}</p>
 
-        <button onClick={this._createPlace}>Creat Place</button>
-        <button onClick={this._createCheckIn}>Check In</button>
-        
-        <p>Current Place: {this.state.myPlace.name}</p>
-        <p>Current PlaceId: {this.state.myPlace.id}</p>
+        <button onClick={this._createPlace}>Creat Current Place</button>
 
+        <small>Click on Marker to Check In</small>
         <Map 
           myLocation={this.state.myLocation}
+          myPlace={this.state.myPlace}
           places={this.state.nearPlaces}
+          createPlace={this._createPlace}
           createCheckIn={this._createCheckIn} />
 
         <p className="authLink"><Link to="logout">Log out</Link></p>

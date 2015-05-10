@@ -58,19 +58,26 @@ var GoogleMapMarkers = React.createClass({
   
   },
 
-  // not using yet!
   handleMapClick: function(mapEvent) {
+    
+    var that = this;
     var marker = {
       position: mapEvent.latLng
     };
 
-    var markers = React.addons
-      .update(this.state.markers, {$push: [marker]});
+    this.props.createPlace(marker.position, function(res) {
+      
+      if(!res) return;
 
-    this.setState({
-      markers: markers,
-      center: mapEvent.latLng
+      var markers = React.addons
+        .update(that.state.markers, {$push: [marker]});
+
+      that.setState({
+        markers: markers
+      });
+
     });
+
   },
 
   handleCenterChange: function(map) {

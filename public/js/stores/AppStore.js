@@ -15,10 +15,6 @@ var TOKEN = auth.getToken();
 
 var AppStore = assign({}, EventEmitter.prototype, {
 
-  getAll: function() {
-    return _checkIns;
-  },
-
   getLocation: function() {
     return _myLocation;
   },
@@ -45,7 +41,14 @@ var AppStore = assign({}, EventEmitter.prototype, {
 });
 
 function getLocation(cb) {
-	if(!navigator.geolocation) return;
+	if(!navigator.geolocation) {
+    return {
+      lat: 25.047908, 
+      lng: 121.517315,
+      radius: 5,
+      token: TOKEN
+    }
+  }
 	navigator.geolocation.getCurrentPosition(function(pos) {
 		var res = {
 			lat: pos.coords.latitude,
@@ -75,6 +78,13 @@ function getNearPlace(position, cb) {
 
 function createPlace(place, cb) {
   
+  // if postion comes from click on map
+  place = place.A ? {
+    lat: place.A,
+    lng: place.F,
+    name: place.name
+  } : place;
+
   var form = assign(place, {token: TOKEN});
   
   $.ajax({
